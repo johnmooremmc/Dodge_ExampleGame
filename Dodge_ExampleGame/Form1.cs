@@ -10,11 +10,71 @@ using System.Windows.Forms;
 
 namespace Dodge_ExampleGame
 {
-    public partial class Form1 : Form
+    public partial class Dodge : Form
     {
-        public Form1()
+
+
+        public Dodge()
         {
             InitializeComponent();
+        
+            for(int i = 0; i < 7; i++)
+            {
+                int x = 10 + (i *2* pnlGame.Width / planet.Length);
+
+                planet[i] = new Planet(x);
+            }
+        
+        }
+
+        Graphics g;
+        /*Planet planet1 = new Planet();*/
+        
+
+        Planet[] planet = new Planet[15];
+
+        Random random = new Random();
+
+
+
+
+
+
+        private void pnlGame_Paint(object sender, PaintEventArgs e)
+        {
+            g = e.Graphics;
+            /*planet1.DrawPlanet(g);*/
+            for(int i = 0; i<7; i++)
+            {
+                int yspeed = random.Next(1, 16);
+                planet[i].y += yspeed;
+                planet[i].DrawPlanet(g);
+
+            }
+
+
+        }
+
+        
+
+        private void Dodge_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TmrPlanet_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                planet[i].MovePlanet();
+                if (planet[i].y >= pnlGame.Height)
+                {
+                    planet[i].y = 30;
+                }
+
+            }
+            pnlGame.Invalidate();
+
         }
     }
 }
