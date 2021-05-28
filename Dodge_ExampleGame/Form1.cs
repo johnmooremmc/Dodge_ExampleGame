@@ -35,7 +35,11 @@ namespace Dodge_ExampleGame
 
         Random random = new Random();
 
+        Spaceship spaceship = new Spaceship();
 
+        bool left, right;
+
+        string move;
 
 
 
@@ -52,7 +56,7 @@ namespace Dodge_ExampleGame
 
             }
 
-
+            spaceship.DrawSpaceship(g);
         }
 
         
@@ -62,9 +66,49 @@ namespace Dodge_ExampleGame
 
         }
 
+        private void Dodge_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.A) { left = true; }
+            if (e.KeyData == Keys.D) { right = true; }
+
+        }
+
+        private void Dodge_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.A) { left = false; }
+            if (e.KeyData == Keys.D) { right = false; }
+
+        }
+
+        private void tmrSpaceship_Tick(object sender, EventArgs e)
+        {
+            if (right) // if right arrow key pressed
+            {
+
+                move = "right";
+                spaceship.MoveSpaceship(move);
+
+            }
+            else if (left) // if left arrow key pressed
+            {
+
+                move = "left";
+                spaceship.MoveSpaceship(move);
+            }
+            else
+            {
+                move = "";
+            }
+
+
+
+        }
+
+
         private void TmrPlanet_Tick(object sender, EventArgs e)
         {
             for (int i = 0; i < 7; i++)
+
             {
                 planet[i].MovePlanet();
                 if (planet[i].y >= pnlGame.Height)

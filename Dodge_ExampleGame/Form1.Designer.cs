@@ -32,6 +32,7 @@ namespace Dodge_ExampleGame
             this.components = new System.ComponentModel.Container();
             this.pnlGame = new System.Windows.Forms.Panel();
             this.TmrPlanet = new System.Windows.Forms.Timer(this.components);
+            this.tmrSpaceship = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // pnlGame
@@ -49,6 +50,12 @@ namespace Dodge_ExampleGame
             this.TmrPlanet.Interval = 20;
             this.TmrPlanet.Tick += new System.EventHandler(this.TmrPlanet_Tick);
             // 
+            // tmrSpaceship
+            // 
+            this.tmrSpaceship.Enabled = true;
+            this.tmrSpaceship.Interval = 20;
+            this.tmrSpaceship.Tick += new System.EventHandler(this.tmrSpaceship_Tick);
+            // 
             // Dodge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -59,6 +66,8 @@ namespace Dodge_ExampleGame
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dodge";
             this.Load += new System.EventHandler(this.Dodge_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dodge_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Dodge_KeyUp);
             this.ResumeLayout(false);
 
         }
@@ -67,6 +76,7 @@ namespace Dodge_ExampleGame
 
         private System.Windows.Forms.Panel pnlGame;
         private System.Windows.Forms.Timer TmrPlanet;
+        private System.Windows.Forms.Timer tmrSpaceship;
     }
 }
 
