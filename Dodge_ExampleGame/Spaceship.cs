@@ -39,17 +39,37 @@ namespace Dodge_ExampleGame
 
             if (move == "right")
             {
+                if (spaceRec.Location.X > 450) // is spaceship within 50 of right side
+                {
 
-                x += 50;
-                spaceRec.Location = new Point(x, y);
+                    x = 450;
+                    spaceRec.Location = new Point(x, y);
+                }
+                else
+                {
+                    x += 20;
+                    spaceRec.Location = new Point(x, y);
+                }
+
             }
+
 
             if (move == "left")
             {
+                if (spaceRec.Location.X < 10) // is spaceship within 10 of left side
+                {
 
-                x -= 50;
-                spaceRec.Location = new Point(x, y);
+                    x = 20;
+                    spaceRec.Location = new Point(x, y);
+                }
+                else
+                {
+                    x -= 20;
+                    spaceRec.Location = new Point(x, y);
+                }
+
             }
+
 
 
         }

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace Dodge_ExampleGame
 {
@@ -18,9 +20,9 @@ namespace Dodge_ExampleGame
         {
             InitializeComponent();
         
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < 6; i++)
             {
-                int x = 10 + (i *2* pnlGame.Width / planet.Length);
+                int x = 10 + (i*55);
 
                 planet[i] = new Planet(x);
             }
@@ -31,13 +33,17 @@ namespace Dodge_ExampleGame
         /*Planet planet1 = new Planet();*/
         
 
-        Planet[] planet = new Planet[15];
+        Planet[] planet = new Planet[6];
 
         Random random = new Random();
 
         Spaceship spaceship = new Spaceship();
 
-        bool left, right;
+        bool left;
+        bool right;
+
+        int score = 0;
+        int lives;
 
         string move;
 
@@ -48,7 +54,7 @@ namespace Dodge_ExampleGame
         {
             g = e.Graphics;
             /*planet1.DrawPlanet(g);*/
-            for(int i = 0; i<7; i++)
+            for(int i = 0; i<6; i++)
             {
                 int yspeed = random.Next(1, 16);
                 planet[i].y += yspeed;
@@ -63,7 +69,7 @@ namespace Dodge_ExampleGame
 
         private void Dodge_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Dodge_KeyDown(object sender, KeyEventArgs e)
@@ -82,6 +88,7 @@ namespace Dodge_ExampleGame
 
         private void tmrSpaceship_Tick(object sender, EventArgs e)
         {
+
             if (right) // if right arrow key pressed
             {
 
@@ -107,17 +114,128 @@ namespace Dodge_ExampleGame
 
         private void TmrPlanet_Tick(object sender, EventArgs e)
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 6; i++)
 
             {
                 planet[i].MovePlanet();
                 if (planet[i].y >= pnlGame.Height)
                 {
                     planet[i].y = 30;
+                    score += 1;
+                    CheckLives();
+                }
+
+                if (spaceship.spaceRec.IntersectsWith(planet[i].planetRec))
+                {
+                    lives -= 1;
+                    planet[i].y = 30;
+                    CheckLives();
+                }
+
+
+            }
+
+            pnlGame.Invalidate();
+           
+            lblScore.Text = "Score:  " + score.ToString();
+
+        }
+
+        private void lblScore_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void CheckLives()
+        {
+            if (lives == 0)
+            {
+                TmrPlanet.Enabled = false;
+                tmrSpaceship.Enabled = false;
+                MessageBox.Show("Game Over, your soooo bad!  Score:  " + score.ToString());
+
+                string path = score.ToString();
+
+                if (!File.Exists(path))
+                {
+                    File.Create(path);
+                }                else
+                {
+                    MessageBox.Show("File Already Exists");
                 }
 
             }
-            pnlGame.Invalidate();
+            lblLives.Text = "Lives:  " + lives.ToString();
+        }
+
+        private void lblLives_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void LoadOption()
+        {
+            lblScore.Text = "Score:  " + score.ToString();
+            CheckLives();
+
+        }
+
+
+
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            lives = 50;
+            score = 0;
+            LoadOption();
+
+
+
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            lives = 3;
+            score = 0;
+            LoadOption();
+
+
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            lives = 2;
+            score = 0;
+            LoadOption();
+
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            lives = 1;
+            score = 0;
+            LoadOption();
+
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tmrSpaceship.Enabled= true;
+            TmrPlanet.Enabled = true;
+            
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tmrSpaceship.Enabled = false;
+            TmrPlanet.Enabled = false;
+
+
+        }
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
         }
     }
