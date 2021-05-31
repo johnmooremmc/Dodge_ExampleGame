@@ -11,21 +11,34 @@ using System.Windows.Forms;
 
 namespace Dodge_ExampleGame
 {
-    class Planet
+    class Planetcreate
     {
-        public int x, y, width, height;
+        public int x, y;
+
+        public int width;
+        public int height;
+        
         public Image planetImage;
 
         public Rectangle planetRec;
 
-        public int score;
+        Random randomplanet = new Random();
 
-        public Planet(int spacing)
+
+        public void Planetsize()
+        {
+
+            width = randomplanet.Next(20, 40);
+            height = randomplanet.Next(20, 40);
+
+        }
+
+        public Planetcreate(int spacing)
         {
             x = spacing;
             y = 10;
-            width = 20;
-            height = 20;
+
+            
 
             planetImage = Properties.Resources.planet1;
             planetRec = new Rectangle(x, y, width, height);

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 
 
 namespace Dodge_ExampleGame
@@ -19,12 +20,15 @@ namespace Dodge_ExampleGame
         public Dodge()
         {
             InitializeComponent();
-        
-            for(int i = 0; i < 6; i++)
+
+            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, pnlGame, new object[] { true });
+
+
+            for (int i = 0; i < 6; i++)
             {
                 int x = 10 + (i*55);
 
-                planet[i] = new Planet(x);
+                planet[i] = new Planetcreate(x);
             }
         
         }
@@ -33,7 +37,7 @@ namespace Dodge_ExampleGame
         /*Planet planet1 = new Planet();*/
         
 
-        Planet[] planet = new Planet[6];
+        Planetcreate[] planet = new Planetcreate[6];
 
         Random random = new Random();
 
@@ -43,10 +47,11 @@ namespace Dodge_ExampleGame
         bool right;
 
         int score = 0;
-        int lives;
+        int lives = 5;
 
         string move;
 
+        bool playing = false;
 
 
 
@@ -112,27 +117,33 @@ namespace Dodge_ExampleGame
         }
 
 
-        private void TmrPlanet_Tick(object sender, EventArgs e)
+        public void TmrPlanet_Tick(object sender, EventArgs e)
         {
-            for (int i = 0; i < 6; i++)
 
+            if (playing)
             {
-                planet[i].MovePlanet();
-                if (planet[i].y >= pnlGame.Height)
+
+
+                for (int i = 0; i < 6; i++)
+
                 {
-                    planet[i].y = 30;
-                    score += 1;
-                    CheckLives();
+                    planet[i].MovePlanet();
+                    if (planet[i].y >= pnlGame.Height)
+                    {
+                        planet[i].y = 30;
+                        score += 1;
+                        CheckLives();
+                        planet.Planetsize();
+                    }
+
+                    if (spaceship.spaceRec.IntersectsWith(planet[i].planetRec))
+                    {
+                        lives -= 1;
+                        planet[i].y = 30;
+                        CheckLives();
+                    }
+
                 }
-
-                if (spaceship.spaceRec.IntersectsWith(planet[i].planetRec))
-                {
-                    lives -= 1;
-                    planet[i].y = 30;
-                    CheckLives();
-                }
-
-
             }
 
             pnlGame.Invalidate();
@@ -153,17 +164,17 @@ namespace Dodge_ExampleGame
             {
                 TmrPlanet.Enabled = false;
                 tmrSpaceship.Enabled = false;
-                MessageBox.Show("Game Over, your soooo bad!  Score:  " + score.ToString());
+                MessageBox.Show("Game Over      Your soooo bad!!!       Score:  " + score.ToString());
 
-                string path = score.ToString();
-
-                if (!File.Exists(path))
-                {
-                    File.Create(path);
-                }                else
-                {
-                    MessageBox.Show("File Already Exists");
-                }
+                //string path = score.ToString();
+                //
+                //if (!File.Exists(path))
+                //{
+                //    File.Create(path);
+                //}                else
+                //{
+                //    MessageBox.Show("File Already Exists");
+                //}
 
             }
             lblLives.Text = "Lives:  " + lives.ToString();
@@ -223,13 +234,16 @@ namespace Dodge_ExampleGame
         {
             tmrSpaceship.Enabled= true;
             TmrPlanet.Enabled = true;
-            
+            playing = true;
+            CheckLives();
+
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tmrSpaceship.Enabled = false;
             TmrPlanet.Enabled = false;
+            playing = false;
 
 
         }
@@ -237,6 +251,16 @@ namespace Dodge_ExampleGame
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            score = 0;
+            lives = 5;
+
+            for (int i = 0; i < 6; i++)
+
+            {
+                planet[i].MovePlanet();
+                planet[i].y = 30;
+                pnlGame.Refresh();
+            }
         }
     }
 }
