@@ -133,7 +133,7 @@ namespace Dodge_ExampleGame
                         planet[i].y = 30;
                         score += 1;
                         CheckLives();
-                        planet.Planetsize();
+                        
                     }
 
                     if (spaceship.spaceRec.IntersectsWith(planet[i].planetRec))
