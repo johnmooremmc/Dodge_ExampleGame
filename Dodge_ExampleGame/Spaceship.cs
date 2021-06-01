@@ -24,13 +24,23 @@ namespace Dodge_ExampleGame
         {
             
             y = 360;
-            width = 40;
+            width = 60;
             height = 40;
 
             spaceship = Properties.Resources.alien1;
             spaceRec = new Rectangle(x, y, width, height);
 
             g.DrawImage(spaceship, spaceRec);
+        }
+
+        public void ShootBullet(bool shoot)
+        {
+            if(shoot)
+            {
+                
+                shoot = false;
+            }
+
         }
 
         public void MoveSpaceship(string move)

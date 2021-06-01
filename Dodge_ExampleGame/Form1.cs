@@ -26,7 +26,7 @@ namespace Dodge_ExampleGame
 
             for (int i = 0; i < 6; i++)
             {
-                int x = 10 + (i*55);
+                int x = 10 + (i*this.Width)/6;
 
                 planet[i] = new Planetcreate(x);
             }
@@ -52,6 +52,7 @@ namespace Dodge_ExampleGame
         string move;
 
         bool playing = false;
+        bool shoot = false;
 
 
 
@@ -59,7 +60,7 @@ namespace Dodge_ExampleGame
         {
             g = e.Graphics;
             /*planet1.DrawPlanet(g);*/
-            for(int i = 0; i<6; i++)
+            for (int i = 0; i<6; i++)
             {
                 int yspeed = random.Next(1, 16);
                 planet[i].y += yspeed;
@@ -68,9 +69,11 @@ namespace Dodge_ExampleGame
             }
 
             spaceship.DrawSpaceship(g);
+            
+
         }
 
-        
+
 
         private void Dodge_Load(object sender, EventArgs e)
         {
@@ -81,6 +84,7 @@ namespace Dodge_ExampleGame
         {
             if (e.KeyData == Keys.A) { left = true; }
             if (e.KeyData == Keys.D) { right = true; }
+            if (e.KeyData == Keys.Space) { shoot = true; }
 
         }
 
@@ -112,7 +116,11 @@ namespace Dodge_ExampleGame
                 move = "";
             }
 
-
+            if(shoot)
+            {
+                spaceship.ShootBullet(shoot);
+                shoot = false;
+            }
 
         }
 
@@ -261,6 +269,11 @@ namespace Dodge_ExampleGame
                 planet[i].y = 30;
                 pnlGame.Refresh();
             }
+        }
+
+        private void lblShoot_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
