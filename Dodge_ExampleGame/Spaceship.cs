@@ -13,21 +13,30 @@ namespace Dodge_ExampleGame
     class Spaceship
     {
 
-        public int  y, width, height;//variables for the rectangle
+        public int width, height;//variables for the rectangle
         public Image spaceship;//variable for the planet's image
 
         public Rectangle spaceRec;//variable for a rectangle to place our image in
 
         int x = 100;
+        int y = 350;
 
-        public void DrawSpaceship(Graphics g)
+        public void DrawSpaceship(Graphics g, string skin)
         {
             
-            y = 360;
+            
             width = 60;
             height = 40;
 
-            spaceship = Properties.Resources.alien1;
+
+            if (skin == "1")
+            {
+                spaceship = Properties.Resources.alien1;
+            }
+            else
+            {
+                spaceship = Properties.Resources._21;
+            }
             spaceRec = new Rectangle(x, y, width, height);
 
             g.DrawImage(spaceship, spaceRec);
@@ -58,6 +67,37 @@ namespace Dodge_ExampleGame
                 else
                 {
                     x += 20;
+                    spaceRec.Location = new Point(x, y);
+                }
+
+            }
+            if (move == "up")
+            {
+                if (spaceRec.Location.Y < 0) // is spaceship within 50 of right side
+                {
+                    y = 0;
+                    
+                    spaceRec.Location = new Point(x, y);
+                }
+                else
+                {
+                    y -= 15;
+                    spaceRec.Location = new Point(x, y);
+                }
+
+            }
+
+            if (move == "down")
+            {
+                if (spaceRec.Location.Y > 340) // is spaceship within 50 of right side
+                {
+                    y = 350;
+
+                    spaceRec.Location = new Point(x, y);
+                }
+                else
+                {
+                    y += 15;
                     spaceRec.Location = new Point(x, y);
                 }
 

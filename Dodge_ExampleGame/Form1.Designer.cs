@@ -46,6 +46,9 @@ namespace Dodge_ExampleGame
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblShoot = new System.Windows.Forms.Label();
+            this.skinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,7 +107,8 @@ namespace Dodge_ExampleGame
             this.livesToolStripMenuItem,
             this.startToolStripMenuItem,
             this.pauseToolStripMenuItem,
-            this.restartToolStripMenuItem});
+            this.restartToolStripMenuItem,
+            this.skinToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -179,6 +183,29 @@ namespace Dodge_ExampleGame
             this.lblShoot.Text = "FALSE";
             this.lblShoot.Click += new System.EventHandler(this.lblShoot_Click);
             // 
+            // skinToolStripMenuItem
+            // 
+            this.skinToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alienToolStripMenuItem,
+            this.flyToolStripMenuItem});
+            this.skinToolStripMenuItem.Name = "skinToolStripMenuItem";
+            this.skinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.skinToolStripMenuItem.Text = "Skin";
+            // 
+            // alienToolStripMenuItem
+            // 
+            this.alienToolStripMenuItem.Name = "alienToolStripMenuItem";
+            this.alienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.alienToolStripMenuItem.Text = "Alien";
+            this.alienToolStripMenuItem.Click += new System.EventHandler(this.alienToolStripMenuItem_Click);
+            // 
+            // flyToolStripMenuItem
+            // 
+            this.flyToolStripMenuItem.Name = "flyToolStripMenuItem";
+            this.flyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.flyToolStripMenuItem.Text = "Fly";
+            this.flyToolStripMenuItem.Click += new System.EventHandler(this.flyToolStripMenuItem_Click);
+            // 
             // Dodge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -222,6 +249,9 @@ namespace Dodge_ExampleGame
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private System.Windows.Forms.Label lblShoot;
+        private System.Windows.Forms.ToolStripMenuItem skinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alienToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem flyToolStripMenuItem;
     }
 }
 

@@ -46,6 +46,9 @@ namespace Dodge_ExampleGame
         bool left;
         bool right;
 
+        bool up;
+        bool down;
+
         int score = 0;
         int lives = 5;
 
@@ -54,7 +57,7 @@ namespace Dodge_ExampleGame
         bool playing = false;
         bool shoot = false;
 
-
+        string skin;
 
         private void pnlGame_Paint(object sender, PaintEventArgs e)
         {
@@ -67,17 +70,14 @@ namespace Dodge_ExampleGame
                 planet[i].DrawPlanet(g);
 
             }
-
-            spaceship.DrawSpaceship(g);
-            
-
+            spaceship.DrawSpaceship(g, skin);
         }
 
 
 
         private void Dodge_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Dodge_KeyDown(object sender, KeyEventArgs e)
@@ -86,12 +86,16 @@ namespace Dodge_ExampleGame
             if (e.KeyData == Keys.D) { right = true; }
             if (e.KeyData == Keys.Space) { shoot = true; }
 
+            if (e.KeyData == Keys.W) { up= true; }
+            if (e.KeyData == Keys.S) { down = true; }
         }
 
         private void Dodge_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.A) { left = false; }
             if (e.KeyData == Keys.D) { right = false; }
+            if (e.KeyData == Keys.W) { up = false; }
+            if (e.KeyData == Keys.S) { down = false; }
 
         }
 
@@ -111,12 +115,25 @@ namespace Dodge_ExampleGame
                 move = "left";
                 spaceship.MoveSpaceship(move);
             }
-            else
-            {
-                move = "";
-            }
+           
 
-            if(shoot)
+            if (up) // if right arrow key pressed
+            {
+
+                move = "up";
+                spaceship.MoveSpaceship(move);
+
+            }
+            else if (down) // if left arrow key pressed
+            {
+
+                move = "down";
+                spaceship.MoveSpaceship(move);
+            }
+            
+
+
+            if (shoot)
             {
                 spaceship.ShootBullet(shoot);
                 shoot = false;
@@ -274,6 +291,16 @@ namespace Dodge_ExampleGame
         private void lblShoot_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void alienToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            skin = "1";
+        }
+
+        private void flyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            skin = "2";
         }
     }
 }
